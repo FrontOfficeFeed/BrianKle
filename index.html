@@ -1,4 +1,3 @@
-HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,14 +155,24 @@ HTML
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            max-width: 650px;
             width: 100%;
+            transition: max-width 0.2s ease-in-out;
+        }
+
+        /* Controlled containers for grids to keep normal spacing */
+        .game-area.mode-6 {
+            max-width: 350px;
+        }
+
+        .game-area.mode-16 {
+            max-width: 550px;
         }
 
         #board {
             display: grid;
             gap: 5px;
             width: 100%;
+            justify-content: center;
         }
 
         .tile {
@@ -228,6 +237,18 @@ HTML
 
         .key.wide {
             flex: 1.5;
+        }
+
+        /* Quote under Keyboard */
+        .keyboard-quote {
+            text-align: center;
+            font-style: italic;
+            color: #818384;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            border-top: 1px dashed var(--panel-border);
+            padding-top: 12px;
+            width: 100%;
         }
 
         /* Game State Colors */
@@ -307,7 +328,7 @@ HTML
             </div>
         </aside>
 
-        <main class="game-area">
+        <main id="game-container" class="game-area mode-6">
             <div id="board"></div>
 
             <div id="keyboard">
@@ -345,6 +366,10 @@ HTML
                     <button class="key" data-key="m">m</button>
                     <button class="key wide" data-key="enter">ENTER</button>
                 </div>
+            </div>
+
+            <div class="keyboard-quote">
+                "You may need your spreadsheet Brian 🙂"
             </div>
         </main>
 
@@ -389,7 +414,7 @@ HTML
             "COSMOS", "LAUNCH", "PLANET", "FLIGHT", "SHADOW", "STRIKE"
         ];
 
-        // Fallback vocabulary for 16 letter game mode
+        // Fallback vocabulary for 16-letter mode
         const targetWords16 = [
             "CHARACTERIZATION", "REPRESENTATIONAL", "MULTIDIMENSIONAL", "COMPREHENSIVENESS",
             "MICROORGANISMS", "INTERDEPENDENCYS", "COUNTERINTELLIGEN", "DISPROPORTIONATE"
@@ -397,7 +422,7 @@ HTML
         
         let wordLength = 6;
         let targetWord = "";
-        const maxGuesses = 6;
+        let maxGuesses = 6; // Set dynamically based on mode
         let currentGuess = "";
         let guesses = [];
         let gameOver = false;
@@ -413,12 +438,14 @@ HTML
 
             const roll = Math.random();
             if (wordLength === 6) {
+                maxGuesses = 6;
                 if (roll < 0.25) {
                     targetWord = "BRIANK";
                 } else {
                     targetWord = targetWords6[Math.floor(Math.random() * targetWords6.length)].toUpperCase();
                 }
             } else if (wordLength === 16) {
+                maxGuesses = 3; // 16-letter mode has only 3 guesses
                 if (roll < 0.25) {
                     targetWord = "BRIANKFROMTIKTOK";
                 } else {
@@ -440,11 +467,10 @@ HTML
                     tile.classList.add('tile');
                     tile.setAttribute('id', `tile-${i}-${j}`);
                     
-                    // Style sizing dynamically depending on layout grid size
                     if (wordLength === 16) {
-                        tile.style.width = "24px";
-                        tile.style.height = "24px";
-                        tile.style.fontSize = "0.9rem";
+                        tile.style.width = "22px";
+                        tile.style.height = "22px";
+                        tile.style.fontSize = "0.85rem";
                         tile.style.borderWidth = "1px";
                     } else {
                         tile.style.width = "50px";
@@ -460,14 +486,20 @@ HTML
         function toggleGameMode() {
             const btn = document.getElementById('mode-btn');
             const hintText = document.getElementById('hint-text');
+            const container = document.getElementById('game-container');
+
             if (wordLength === 6) {
                 wordLength = 16;
                 btn.textContent = "Play 6-Letter Game";
                 hintText.textContent = "BRIANKFROMTIKTOK";
+                container.classList.remove('mode-6');
+                container.classList.add('mode-16');
             } else {
                 wordLength = 6;
                 btn.textContent = "Play 16-Letter Game";
                 hintText.textContent = "BRIANK";
+                container.classList.remove('mode-16');
+                container.classList.add('mode-6');
             }
             initGame();
         }
@@ -524,7 +556,6 @@ HTML
                 const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`);
                 return response.ok;
             } catch (error) {
-                // Local fallback arrays
                 if (wordLength === 6) {
                     return targetWords6.includes(word);
                 } else {
