@@ -26,7 +26,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 10px;
+            padding: 20px;
             box-sizing: border-box;
         }
 
@@ -34,21 +34,21 @@
             text-align: center;
             border-bottom: 1px solid var(--panel-border);
             width: 100%;
-            max-width: 1200px;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            max-width: 1400px;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         h1 {
             margin: 0;
-            font-size: 2.2rem;
-            letter-spacing: 2px;
+            font-size: 3rem;
+            letter-spacing: 3px;
         }
 
         .sub-header {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             color: #818384;
-            margin: 5px 0 0 0;
+            margin: 8px 0 0 0;
             font-weight: 500;
         }
 
@@ -57,54 +57,54 @@
             font-weight: bold;
         }
 
-        /* 3-Column Layout Container */
+        /* 3-Column Layout Container - Expanded for better screen utilization */
         .layout {
             display: flex;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             justify-content: center;
             align-items: flex-start;
-            gap: 30px;
+            gap: 40px;
             flex-grow: 1;
         }
 
-        /* Side Panels */
+        /* Side Panels - Made wider and larger text */
         .side-panel {
-            width: 250px;
+            width: 300px;
             background-color: var(--panel-bg);
             border: 1px solid var(--panel-border);
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 25px;
             box-sizing: border-box;
         }
 
         .side-panel h2 {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border-bottom: 1px solid var(--panel-border);
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #818384;
         }
 
         /* Quotes styling */
         .quote-box {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-style: italic;
-            border-left: 3px solid var(--correct);
-            padding-left: 10px;
-            font-size: 0.9rem;
+            border-left: 4px solid var(--correct);
+            padding-left: 12px;
+            font-size: 1.05rem;
         }
 
         .quote-author {
             display: block;
             font-style: normal;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #818384;
-            margin-top: 5px;
+            margin-top: 6px;
             text-align: right;
         }
 
@@ -113,15 +113,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 14px;
             color: var(--text-main);
             text-decoration: none;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
             background: #252526;
             transition: background 0.2s, transform 0.2s;
-            font-size: 0.9rem;
+            font-size: 1.05rem;
             font-weight: 600;
             border: none;
             cursor: pointer;
@@ -136,7 +136,7 @@
 
         .action-btn {
             background: var(--correct);
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .action-btn:hover {
@@ -144,39 +144,39 @@
         }
 
         .social-link svg {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             fill: currentColor;
         }
 
-        /* Main Game Center Area */
+        /* Main Game Center Area - Heavily upscaled */
         .game-area {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
             width: 100%;
             transition: max-width 0.2s ease-in-out;
         }
 
-        /* Controlled containers for grids to keep normal spacing */
+        /* Substantially scaled-up containers */
         .game-area.mode-6 {
-            max-width: 350px;
+            max-width: 480px;
         }
 
         .game-area.mode-16 {
-            max-width: 550px;
+            max-width: 720px;
         }
 
         #board {
             display: grid;
-            gap: 5px;
+            gap: 8px;
             width: 100%;
             justify-content: center;
         }
 
         .tile {
-            border: 2px solid var(--tile-border);
+            border: 3px solid var(--tile-border);
             display: inline-flex;
             justify-content: center;
             align-items: center;
@@ -194,36 +194,37 @@
         #message {
             background-color: #ffffff;
             color: #000000;
-            padding: 12px 20px;
-            border-radius: 5px;
+            padding: 16px 26px;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 1.2rem;
             position: fixed;
-            top: 10%;
+            top: 12%;
             z-index: 10;
             display: none;
-            box-shadow: 0 4px 23px rgba(0,0,0,0.5);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.6);
         }
 
-        /* Keyboard styling */
+        /* Keyboard styling - Made larger and clearer */
         #keyboard {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .row {
             display: flex;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .key {
             background-color: #818384;
             color: white;
             border: 0;
-            padding: 15px 0;
-            border-radius: 4px;
+            padding: 20px 0;
+            border-radius: 6px;
             cursor: pointer;
             user-select: none;
             font-weight: bold;
@@ -232,23 +233,24 @@
             justify-content: center;
             align-items: center;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
 
         .key.wide {
-            flex: 1.5;
+            flex: 1.6;
         }
 
-        /* Quote under Keyboard */
+        /* Quote under Keyboard - Modified to toggle via JS classes */
         .keyboard-quote {
             text-align: center;
             font-style: italic;
             color: #818384;
-            font-size: 0.95rem;
-            margin-top: 10px;
+            font-size: 1.1rem;
+            margin-top: 15px;
             border-top: 1px dashed var(--panel-border);
-            padding-top: 12px;
+            padding-top: 15px;
             width: 100%;
+            display: none; /* Controlled dynamically in toggleGameMode */
         }
 
         /* Game State Colors */
@@ -265,15 +267,15 @@
             border-color: var(--absent) !important;
         }
 
-        /* Footer Credits - Scaled Larger */
+        /* Footer Credits */
         footer {
-            margin-top: 30px;
+            margin-top: 40px;
             border-top: 1px solid var(--panel-border);
-            padding-top: 20px;
+            padding-top: 25px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             text-align: center;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: #a0a0a0;
         }
 
@@ -281,7 +283,7 @@
             color: var(--correct);
             text-decoration: none;
             font-weight: bold;
-            margin: 0 5px;
+            margin: 0 6px;
         }
 
         footer a:hover {
@@ -293,11 +295,14 @@
             .layout {
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
+                gap: 25px;
             }
             .side-panel {
                 width: 100%;
-                max-width: 500px;
+                max-width: 600px;
+            }
+            .game-area.mode-16 {
+                max-width: 100%;
             }
         }
     </style>
@@ -368,7 +373,7 @@
                 </div>
             </div>
 
-            <div class="keyboard-quote">
+            <div id="dynamic-quote" class="keyboard-quote">
                 "You may need your spreadsheet Brian 🙂"
             </div>
         </main>
@@ -422,7 +427,7 @@
         
         let wordLength = 6;
         let targetWord = "";
-        let maxGuesses = 6; // Set dynamically based on mode
+        let maxGuesses = 6; 
         let currentGuess = "";
         let guesses = [];
         let gameOver = false;
@@ -445,7 +450,7 @@
                     targetWord = targetWords6[Math.floor(Math.random() * targetWords6.length)].toUpperCase();
                 }
             } else if (wordLength === 16) {
-                maxGuesses = 3; // 16-letter mode has only 3 guesses
+                maxGuesses = 3; 
                 if (roll < 0.25) {
                     targetWord = "BRIANKFROMTIKTOK";
                 } else {
@@ -468,15 +473,17 @@
                     tile.setAttribute('id', `tile-${i}-${j}`);
                     
                     if (wordLength === 16) {
-                        tile.style.width = "22px";
-                        tile.style.height = "22px";
-                        tile.style.fontSize = "0.85rem";
-                        tile.style.borderWidth = "1px";
-                    } else {
-                        tile.style.width = "50px";
-                        tile.style.height = "50px";
-                        tile.style.fontSize = "1.8rem";
+                        // Moderately sized for 16 columns wide
+                        tile.style.width = "34px";
+                        tile.style.height = "34px";
+                        tile.style.fontSize = "1.2rem";
                         tile.style.borderWidth = "2px";
+                    } else {
+                        // Much bigger layout sizes for 6 letter mode
+                        tile.style.width = "70px";
+                        tile.style.height = "70px";
+                        tile.style.fontSize = "2.3rem";
+                        tile.style.borderWidth = "3px";
                     }
                     board.appendChild(tile);
                 }
@@ -487,6 +494,7 @@
             const btn = document.getElementById('mode-btn');
             const hintText = document.getElementById('hint-text');
             const container = document.getElementById('game-container');
+            const quoteEl = document.getElementById('dynamic-quote');
 
             if (wordLength === 6) {
                 wordLength = 16;
@@ -494,12 +502,14 @@
                 hintText.textContent = "BRIANKFROMTIKTOK";
                 container.classList.remove('mode-6');
                 container.classList.add('mode-16');
+                quoteEl.style.display = 'block'; // Show spreadsheet quote in 16 letter mode
             } else {
                 wordLength = 6;
                 btn.textContent = "Play 16-Letter Game";
                 hintText.textContent = "BRIANK";
                 container.classList.remove('mode-16');
                 container.classList.add('mode-6');
+                quoteEl.style.display = 'none'; // Hide spreadsheet quote in 6 letter mode
             }
             initGame();
         }
