@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,23 +156,21 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            max-width: 550px;
+            max-width: 650px;
             width: 100%;
         }
 
         #board {
             display: grid;
             gap: 5px;
+            width: 100%;
         }
 
         .tile {
-            width: 50px;
-            height: 50px;
             border: 2px solid var(--tile-border);
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.8rem;
             font-weight: bold;
             text-transform: uppercase;
             user-select: none;
@@ -245,7 +244,7 @@
             border-color: var(--absent) !important;
         }
 
-        /* Footer Credits - Made Larger */
+        /* Footer Credits - Scaled Larger */
         footer {
             margin-top: 30px;
             border-top: 1px solid var(--panel-border);
@@ -286,7 +285,7 @@
 
     <header>
         <h1>BrianKle</h1>
-        <p class="sub-header">Guess the hidden word! <span>25%</span> of the time, the answer is <span>BRIANK</span>.</p>
+        <p class="sub-header">Guess the hidden word! <span>25%</span> of the time, the answer is <span id="hint-text">BRIANK</span>.</p>
     </header>
 
     <div id="message"></div>
@@ -373,7 +372,7 @@
                 Instagram
             </a>
 
-            <button id="mode-btn" class="action-btn" onclick="toggleGameMode()">Play 8-Letter Game</button>
+            <button id="mode-btn" class="action-btn" onclick="toggleGameMode()">Play 16-Letter Game</button>
         </aside>
     </div>
 
@@ -384,19 +383,19 @@
     </footer>
 
     <script>
-        // Target lists
         const targetWords6 = [
             "CODING", "GAMING", "LEGEND", "CHAMPS", "PLAYER", "WINNER", 
             "SYSTEM", "ONLINE", "FRIEND", "BEASTS", "CYPHER", "MATRIX", 
             "COSMOS", "LAUNCH", "PLANET", "FLIGHT", "SHADOW", "STRIKE"
         ];
 
-        const targetWords8 = [
-            "INTERNET", "DATABASE", "KEYBOARD", "SOFTWARE", "CHAMPION", "GLITCHES",
-            "UNIVERSE", "SPACESHIP", "PRACTICE", "CREATIVE", "WARRIORS", "FEEDBACK"
+        // Fallback vocabulary for 16 letter game mode
+        const targetWords16 = [
+            "CHARACTERIZATION", "REPRESENTATIONAL", "MULTIDIMENSIONAL", "COMPREHENSIVENESS",
+            "MICROORGANISMS", "INTERDEPENDENCYS", "COUNTERINTELLIGEN", "DISPROPORTIONATE"
         ];
         
-        let wordLength = 6; // Default starting word length
+        let wordLength = 6;
         let targetWord = "";
         const maxGuesses = 6;
         let currentGuess = "";
@@ -405,7 +404,6 @@
         let isValidating = false;
 
         function initGame() {
-            // Clear prior states
             currentGuess = "";
             guesses = [];
             gameOver = false;
@@ -420,11 +418,11 @@
                 } else {
                     targetWord = targetWords6[Math.floor(Math.random() * targetWords6.length)].toUpperCase();
                 }
-            } else if (wordLength === 8) {
+            } else if (wordLength === 16) {
                 if (roll < 0.25) {
-                    targetWord = "BRIANKFT"; // "BRIANKFT" as 8-letter version of briankfromtiktok
+                    targetWord = "BRIANKFROMTIKTOK";
                 } else {
-                    targetWord = targetWords8[Math.floor(Math.random() * targetWords8.length)].toUpperCase();
+                    targetWord = targetWords16[Math.floor(Math.random() * targetWords16.length)].toUpperCase();
                 }
             }
             
@@ -434,7 +432,6 @@
         function setupBoard() {
             const board = document.getElementById('board');
             board.innerHTML = "";
-            // Adjust board columns based on word length
             board.style.gridTemplateColumns = `repeat(${wordLength}, 1fr)`;
 
             for (let i = 0; i < maxGuesses; i++) {
@@ -442,15 +439,18 @@
                     const tile = document.createElement('div');
                     tile.classList.add('tile');
                     tile.setAttribute('id', `tile-${i}-${j}`);
-                    // Slightly scale down tile size if layout gets too wide on mobile
-                    if (wordLength === 8) {
-                        tile.style.width = "42px";
-                        tile.style.height = "42px";
-                        tile.style.fontSize = "1.5rem";
+                    
+                    // Style sizing dynamically depending on layout grid size
+                    if (wordLength === 16) {
+                        tile.style.width = "24px";
+                        tile.style.height = "24px";
+                        tile.style.fontSize = "0.9rem";
+                        tile.style.borderWidth = "1px";
                     } else {
                         tile.style.width = "50px";
                         tile.style.height = "50px";
                         tile.style.fontSize = "1.8rem";
+                        tile.style.borderWidth = "2px";
                     }
                     board.appendChild(tile);
                 }
@@ -459,15 +459,15 @@
 
         function toggleGameMode() {
             const btn = document.getElementById('mode-btn');
-            const subHeader = document.querySelector('.sub-header');
+            const hintText = document.getElementById('hint-text');
             if (wordLength === 6) {
-                wordLength = 8;
+                wordLength = 16;
                 btn.textContent = "Play 6-Letter Game";
-                subHeader.innerHTML = "Guess the hidden word! <span>25%</span> of the time, the answer is <span>BRIANKFT</span>.";
+                hintText.textContent = "BRIANKFROMTIKTOK";
             } else {
                 wordLength = 6;
-                btn.textContent = "Play 8-Letter Game";
-                subHeader.innerHTML = "Guess the hidden word! <span>25%</span> of the time, the answer is <span>BRIANK</span>.";
+                btn.textContent = "Play 16-Letter Game";
+                hintText.textContent = "BRIANK";
             }
             initGame();
         }
@@ -518,17 +518,17 @@
         }
 
         async function checkDictionary(word) {
-            if (word === "BRIANK" || word === "BRIANKFT") return true; // Special bypass
+            if (word === "BRIANK" || word === "BRIANKFROMTIKTOK") return true; 
             
             try {
                 const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`);
                 return response.ok;
             } catch (error) {
-                // Fallback local verify if API fails
+                // Local fallback arrays
                 if (wordLength === 6) {
                     return targetWords6.includes(word);
                 } else {
-                    return targetWords8.includes(word);
+                    return targetWords16.includes(word);
                 }
             }
         }
@@ -590,8 +590,8 @@
             }
 
             if (guess === targetWord) {
-                if (targetWord === "BRIANK" || targetWord === "BRIANKFT") {
-                    showMessage("👑 UNBELIEVABLE! You found Brian!", null);
+                if (targetWord === "BRIANK" || targetWord === "BRIANKFROMTIKTOK") {
+                    showMessage("👑 UNBELIEVABLE! You found Brian K!", null);
                 } else {
                     showMessage("🎉 Brilliant! You got it.", null);
                 }
