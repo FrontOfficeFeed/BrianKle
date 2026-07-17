@@ -29,6 +29,8 @@
             padding: 10px;
             box-sizing: border-box;
             overflow-x: hidden;
+            /* Prevents double tap zoom globally */
+            touch-action: manipulation; 
         }
 
         header {
@@ -58,7 +60,6 @@
             font-weight: bold;
         }
 
-        /* Responsive 3-Column Layout */
         .layout {
             display: flex;
             width: 100%;
@@ -69,7 +70,6 @@
             flex-grow: 1;
         }
 
-        /* Side Panels */
         .side-panel {
             width: 280px;
             background-color: var(--panel-bg);
@@ -126,6 +126,7 @@
             cursor: pointer;
             width: 100%;
             box-sizing: border-box;
+            touch-action: manipulation;
         }
 
         .social-link:hover, .action-btn:hover {
@@ -148,7 +149,6 @@
             fill: currentColor;
         }
 
-        /* Scaled Main Game Area */
         .game-area {
             display: flex;
             flex-direction: column;
@@ -185,6 +185,7 @@
             user-select: none;
             box-sizing: border-box;
             transition: background-color 0.3s, border-color 0.3s;
+            touch-action: manipulation;
         }
 
         .tile.active {
@@ -206,7 +207,6 @@
             text-align: center;
         }
 
-        /* Keyboard layout rules */
         #keyboard {
             width: 100%;
             display: flex;
@@ -238,6 +238,7 @@
             text-transform: uppercase;
             font-size: 1rem;
             min-width: 0;
+            touch-action: manipulation;
         }
 
         .key.wide {
@@ -280,7 +281,7 @@
 
         footer a:hover { text-decoration: underline; }
 
-        /* Mobile Optimization Rules */
+        /* Responsive Breakpoints */
         @media (max-width: 900px) {
             .layout {
                 flex-direction: column;
@@ -310,16 +311,20 @@
                 height: calc((100vw - 50px) / 6);
                 max-width: 60px;
                 max-height: 60px;
-                font-size: 1.5rem;
+                font-size: 1.4rem;
                 border-width: 2px;
             }
             .mode-16 .tile {
-                width: calc((100vw - 40px) / 16);
-                height: calc((100vw - 40px) / 16);
+                width: calc((100vw - 45px) / 16);
+                height: calc((100vw - 45px) / 16);
                 max-width: 32px;
                 max-height: 32px;
-                font-size: 0.75rem;
+                font-size: 0.7rem;
                 border-width: 1px;
+            }
+            .key {
+                padding: 12px 0;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -531,9 +536,7 @@
                 quoteEl.style.display = 'none'; 
             }
 
-            // CRITICAL FIX: Strip focus completely so hitting ENTER handles typing, not button clicking!
             btn.blur();
-            
             initGame();
         }
 
@@ -623,7 +626,6 @@
 
             let targetLetters = targetWord.split('');
 
-            // First pass: mark correct green
             for (let i = 0; i < wordLength; i++) {
                 const tile = document.getElementById(`tile-${rowIdx}-${i}`);
                 const letter = guess[i];
@@ -635,7 +637,6 @@
                 }
             }
 
-            // Second pass: mark yellow or gray
             for (let i = 0; i < wordLength; i++) {
                 const tile = document.getElementById(`tile-${rowIdx}-${i}`);
                 if (tile.classList.contains('correct')) continue;
@@ -654,8 +655,10 @@
             }
 
             if (guess === targetWord) {
-                if (targetWord === "BRIANK" || targetWord === "BRIANKFROMTIKTOK") {
+                if (targetWord === "BRIANK") {
                     showMessage("👑 UNBELIEVABLE! You found Brian K!", null);
+                } else if (targetWord === "BRIANKFROMTIKTOK") {
+                    showMessage("👑 UNBELIEVABLE! You found BrianKFromTiktok!", null);
                 } else {
                     showMessage("🎉 Brilliant! You got it.", null);
                 }
