@@ -29,7 +29,6 @@
             padding: 10px;
             box-sizing: border-box;
             overflow-x: hidden;
-            /* Prevents double tap zoom globally */
             touch-action: manipulation; 
         }
 
@@ -169,7 +168,7 @@
 
         #board {
             display: grid;
-            gap: 6px;
+            gap: 4px; /* Reduced slightly for mobile grid safety */
             width: 100%;
             justify-content: center;
             box-sizing: border-box;
@@ -306,6 +305,9 @@
             .game-area.mode-6, .game-area.mode-16 {
                 max-width: 100%;
             }
+            #board {
+                gap: 3px; /* Tighter gap ensures they all fit on tiny screens */
+            }
             .mode-6 .tile {
                 width: calc((100vw - 50px) / 6);
                 height: calc((100vw - 50px) / 6);
@@ -315,11 +317,12 @@
                 border-width: 2px;
             }
             .mode-16 .tile {
-                width: calc((100vw - 45px) / 16);
-                height: calc((100vw - 45px) / 16);
+                /* Changed math to ensure 16 items fit perfectly side by side */
+                width: calc((100vw - 60px) / 16);
+                height: calc((100vw - 60px) / 16);
                 max-width: 32px;
                 max-height: 32px;
-                font-size: 0.7rem;
+                font-size: 0.55rem; /* Slightly smaller text so it doesn't overflow container */
                 border-width: 1px;
             }
             .key {
@@ -442,8 +445,8 @@
         ];
 
         const targetWords16 = [
-            "CHARACTERIZATION", "REPRESENTATIONAL", "MULTIDIMENSIONAL", "COMPREHENSIVENESS",
-            "MICROORGANISMS", "INTERDEPENDENCYS", "COUNTERINTELLIGEN", "DISPROPORTIONATE"
+            "CHARACTERIZATION", "REPRESENTATIONAL", "MULTIDIMENSIONAL", "DISPROPORTIONATE",
+            "UNCHARACTERISTIC", "HYPERVENTILATION", "MICROCIRCULATION", "ELECTROMAGNETISM"
         ];
         
         let wordLength = 6;
