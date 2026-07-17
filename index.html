@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -311,7 +312,7 @@
 
     <header>
         <h1>BrianKle</h1>
-        <p class="sub-header">Guess the hidden word! <span>50%</span> of the time, the answer is <span id="hint-text">BRIANK</span>.</p>
+        <p class="sub-header">Guess the hidden word! <span id="hint-percent">25%</span> of the time, the answer is <span id="hint-text">BRIANK</span>.</p>
     </header>
 
     <div id="message"></div>
@@ -451,7 +452,7 @@
                 }
             } else if (wordLength === 16) {
                 maxGuesses = 3; 
-                if (roll < 0.50) {
+                if (roll < 0.50) { // Configured to 50% chance for 16-letter mode
                     targetWord = "BRIANKFROMTIKTOK";
                 } else {
                     targetWord = targetWords16[Math.floor(Math.random() * targetWords16.length)].toUpperCase();
@@ -473,13 +474,11 @@
                     tile.setAttribute('id', `tile-${i}-${j}`);
                     
                     if (wordLength === 16) {
-                        // Moderately sized for 16 columns wide
                         tile.style.width = "34px";
                         tile.style.height = "34px";
                         tile.style.fontSize = "1.2rem";
                         tile.style.borderWidth = "2px";
                     } else {
-                        // Much bigger layout sizes for 6 letter mode
                         tile.style.width = "70px";
                         tile.style.height = "70px";
                         tile.style.fontSize = "2.3rem";
@@ -493,6 +492,7 @@
         function toggleGameMode() {
             const btn = document.getElementById('mode-btn');
             const hintText = document.getElementById('hint-text');
+            const hintPercent = document.getElementById('hint-percent'); // Grab the percent element
             const container = document.getElementById('game-container');
             const quoteEl = document.getElementById('dynamic-quote');
 
@@ -500,16 +500,18 @@
                 wordLength = 16;
                 btn.textContent = "Play 6-Letter Game";
                 hintText.textContent = "BRIANKFROMTIKTOK";
+                hintPercent.textContent = "50%"; // Set to 50% for long mode
                 container.classList.remove('mode-6');
                 container.classList.add('mode-16');
-                quoteEl.style.display = 'block'; // Show spreadsheet quote in 16 letter mode
+                quoteEl.style.display = 'block'; 
             } else {
                 wordLength = 6;
                 btn.textContent = "Play 16-Letter Game";
                 hintText.textContent = "BRIANK";
+                hintPercent.textContent = "25%"; // Revert back to 25% for short mode
                 container.classList.remove('mode-16');
                 container.classList.add('mode-6');
-                quoteEl.style.display = 'none'; // Hide spreadsheet quote in 6 letter mode
+                quoteEl.style.display = 'none'; 
             }
             initGame();
         }
