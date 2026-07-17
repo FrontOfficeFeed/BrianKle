@@ -311,7 +311,7 @@
 
     <header>
         <h1>BrianKle</h1>
-        <p class="sub-header">Guess the hidden word! <span>25%</span> of the time, the answer is <span id="hint-text">BRIANK</span>.</p>
+        <p class="sub-header">Guess the hidden word! <span>50%</span> of the time, the answer is <span id="hint-text">BRIANK</span>.</p>
     </header>
 
     <div id="message"></div>
@@ -451,7 +451,7 @@
                 }
             } else if (wordLength === 16) {
                 maxGuesses = 3; 
-                if (roll < 0.25) {
+                if (roll < 0.50) {
                     targetWord = "BRIANKFROMTIKTOK";
                 } else {
                     targetWord = targetWords16[Math.floor(Math.random() * targetWords16.length)].toUpperCase();
