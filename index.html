@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BrianKle</title>
     <style>
         :root {
@@ -28,6 +28,7 @@
             margin: 0;
             padding: 10px;
             box-sizing: border-box;
+            -webkit-text-size-adjust: 100%;
         }
 
         header {
@@ -36,13 +37,43 @@
             width: 100%;
             max-width: 1200px;
             padding-bottom: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         h1 {
-            margin: 0;
+            margin: 0 0 5px 0;
             font-size: 2.2rem;
             letter-spacing: 2px;
+        }
+
+        .chance-indicator {
+            font-size: 1rem;
+            color: var(--present);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Mode Switcher Button */
+        .mode-btn {
+            background-color: var(--correct);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            margin-bottom: 5px;
+        }
+
+        .mode-btn:hover {
+            background-color: #43733f;
+        }
+
+        .mode-btn:active {
+            transform: scale(0.98);
         }
 
         /* 3-Column Layout Container */
@@ -52,7 +83,7 @@
             max-width: 1200px;
             justify-content: center;
             align-items: flex-start;
-            gap: 30px;
+            gap: 20px;
             flex-grow: 1;
         }
 
@@ -128,29 +159,50 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            max-width: 500px;
+            gap: 15px;
             width: 100%;
+            max-width: 600px;
         }
 
         #board {
             display: grid;
             gap: 5px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* 6 Letter Variant Grid */
+        .grid-6 {
             grid-template-columns: repeat(6, 1fr);
+            max-width: 330px;
+        }
+
+        /* 16 Letter Variant Grid */
+        .grid-16 {
+            grid-template-columns: repeat(16, 1fr);
+            max-width: 100%;
+            gap: 3px !important;
         }
 
         .tile {
-            width: 50px;
-            height: 50px;
+            aspect-ratio: 1/1;
             border: 2px solid var(--tile-border);
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
             text-transform: uppercase;
             user-select: none;
             transition: background-color 0.3s, border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        /* Adjust sizing dynamically for the 16-letter mode */
+        .grid-16 .tile {
+            font-size: 0.8rem;
+            border-width: 1px;
         }
 
         .tile.active {
@@ -165,7 +217,7 @@
             border-radius: 5px;
             font-weight: bold;
             position: fixed;
-            top: 10%;
+            top: 12%;
             z-index: 10;
             display: none;
             box-shadow: 0 4px 23px rgba(0,0,0,0.5);
@@ -176,20 +228,21 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
+            margin-top: 5px;
         }
 
         .row {
             display: flex;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .key {
             background-color: #818384;
             color: white;
             border: 0;
-            padding: 15px 0;
+            padding: 14px 0;
             border-radius: 4px;
             cursor: pointer;
             user-select: none;
@@ -199,11 +252,12 @@
             justify-content: center;
             align-items: center;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .key.wide {
             flex: 1.5;
+            font-size: 0.75rem;
         }
 
         /* Game State Colors */
@@ -220,27 +274,32 @@
             border-color: var(--absent) !important;
         }
 
-        /* Footer Credits */
+        /* Enhanced Visibility Footer Credits */
         footer {
-            margin-top: 30px;
-            border-top: 1px solid var(--panel-border);
-            padding-top: 15px;
+            margin-top: auto;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            border-top: 2px solid var(--panel-border);
             width: 100%;
             max-width: 1200px;
             text-align: center;
-            font-size: 0.8rem;
-            color: #818384;
+            font-size: 1.05rem; /* Increased size */
+            color: #ffffff; /* Brighter color */
+            font-weight: 500;
         }
 
         footer a {
-            color: var(--correct);
+            color: #64b25e; /* Vibrant version of main green */
             text-decoration: none;
             font-weight: bold;
             margin: 0 5px;
+            border-bottom: 1px dashed #64b25e;
         }
 
         footer a:hover {
-            text-decoration: underline;
+            color: #ffffff;
+            background-color: var(--correct);
+            border-bottom-style: solid;
         }
 
         /* Responsive adjustments for Mobile layout */
@@ -248,11 +307,37 @@
             .layout {
                 flex-direction: column;
                 align-items: center;
-                gap: 20px;
+                gap: 15px;
             }
             .side-panel {
                 width: 100%;
                 max-width: 500px;
+            }
+            .side-panel:first-of-type {
+                order: 2; /* Push quotes below the game on mobile */
+            }
+            .side-panel:last-of-type {
+                order: 3; /* Push socials below quotes */
+            }
+            .game-area {
+                order: 1; /* Keep game on top */
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .tile {
+                font-size: 1.3rem;
+            }
+            .grid-16 .tile {
+                font-size: 0.55rem;
+                border-width: 1px;
+            }
+            .key {
+                padding: 16px 0; /* Slightly larger targets for thumbs */
+                font-size: 0.8rem;
+            }
+            footer {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -261,6 +346,8 @@
 
     <header>
         <h1>BrianKle</h1>
+        <div id="chanceText" class="chance-indicator">25% Chance of being BRIANK!</div>
+        <button id="modeToggle" class="mode-btn">Play 16-Letter Version</button>
     </header>
 
     <div id="message"></div>
@@ -268,18 +355,8 @@
     <div class="layout">
         <aside class="side-panel">
             <h2>Brian's World</h2>
-            <div class="quote-box">
-                "If you aren't guessing BRIANK first, what are you even doing?"
-                <span class="quote-author">- Brian K</span>
-            </div>
-            <div class="quote-box">
-                "The 25% chance is real. Keep rolling the tiles!"
-                <span class="quote-author">- The Fans</span>
-            </div>
-            <div class="quote-box">
-                "Legend has it, some grids were made just for him."
-                <span class="quote-author">- Internet Lore</span>
-            </div>
+            <div id="quotesContainer">
+                </div>
         </aside>
 
         <main class="game-area">
@@ -356,35 +433,81 @@
     </footer>
 
     <script>
-        const targetWords = [
+        const targetWords6 = [
             "CODING", "GAMING", "LEGEND", "CHAMPS", "PLAYER", "WINNER", 
             "SYSTEM", "ONLINE", "FRIEND", "BEASTS", "CYPHER", "MATRIX", 
             "COSMOS", "LAUNCH", "PLANET", "FLIGHT", "SHADOW", "STRIKE"
         ];
+
+        // 16 letter dummy valid words for variety fallback
+        const targetWords16 = [
+            "RECHARACTERIZING", "UNSUCCESSFULNESS", "COMPREHENSIVENESS", "COUNTERREVOLUTION",
+            "MISREPRESENTATION", "INTERDISCIPLINARY", "ENVIRONMENTALISTS", "INTERNATIONALIZATION"
+        ];
         
+        // Game State Variables
+        let isSixLetterMode = true; 
         let targetWord = "";
-        const wordLength = 6;
+        let wordLength = 6;
         const maxGuesses = 6;
         let currentGuess = "";
         let guesses = [];
         let gameOver = false;
         let isValidating = false;
 
+        const baseQuotes = [
+            { text: `"If you aren't guessing BRIANK first, what are you even doing?"`, author: "- Brian K" },
+            { text: `"The 25% chance is real. Keep rolling the tiles!"`, author: "- The Fans" },
+            { text: `"Legend has it, some grids were made just for him."`, author: "- Internet Lore" }
+        ];
+
+        const specialQuote = { text: `"will you need your spreadsheet lol"`, author: "- The Chat" };
+
         function initGame() {
-            // 25% chance to be "BRIANK"
+            currentGuess = "";
+            guesses = [];
+            gameOver = false;
+            isValidating = false;
+            hideMessage();
+            resetKeyboardColors();
+
             const roll = Math.random();
-            if (roll < 0.25) {
-                targetWord = "BRIANK";
+
+            if (isSixLetterMode) {
+                wordLength = 6;
+                document.getElementById('chanceText').textContent = "25% Chance of being BRIANK!";
+                document.getElementById('modeToggle').textContent = "Play 16-Letter Version";
+                
+                if (roll < 0.25) {
+                    targetWord = "BRIANK";
+                } else {
+                    targetWord = targetWords6[Math.floor(Math.random() * targetWords6.length)].toUpperCase();
+                }
             } else {
-                targetWord = targetWords[Math.floor(Math.random() * targetWords.length)].toUpperCase();
+                wordLength = 16;
+                document.getElementById('chanceText').textContent = "50% Chance of being BRIANKFROMTIKTOK!";
+                document.getElementById('modeToggle').textContent = "Play 6-Letter Version";
+                
+                if (roll < 0.50) {
+                    targetWord = "BRIANKFROMTIKTOK";
+                } else {
+                    targetWord = targetWords16[Math.floor(Math.random() * targetWords16.length)].toUpperCase();
+                }
             }
             
             setupBoard();
+            setupQuotes();
         }
 
         function setupBoard() {
             const board = document.getElementById('board');
             board.innerHTML = "";
+            
+            if (isSixLetterMode) {
+                board.className = "grid-6";
+            } else {
+                board.className = "grid-16";
+            }
 
             for (let i = 0; i < maxGuesses; i++) {
                 for (let j = 0; j < wordLength; j++) {
@@ -394,6 +517,24 @@
                     board.appendChild(tile);
                 }
             }
+        }
+
+        function setupQuotes() {
+            const container = document.getElementById('quotesContainer');
+            container.innerHTML = "";
+            
+            // Build temporary list of quotes
+            let activeQuotes = [...baseQuotes];
+            if (!isSixLetterMode) {
+                activeQuotes.push(specialQuote);
+            }
+
+            activeQuotes.forEach(q => {
+                const box = document.createElement('div');
+                box.className = 'quote-box';
+                box.innerHTML = `${q.text} <span class="quote-author">${q.author}</span>`;
+                container.appendChild(box);
+            });
         }
 
         function showMessage(msg, duration = 2000) {
@@ -431,6 +572,7 @@
             const rowIdx = guesses.length;
             for (let colIdx = 0; colIdx < wordLength; colIdx++) {
                 const tile = document.getElementById(`tile-${rowIdx}-${colIdx}`);
+                if (!tile) continue;
                 const letter = currentGuess[colIdx] || "";
                 tile.textContent = letter;
                 if (letter) {
@@ -442,14 +584,18 @@
         }
 
         async function checkDictionary(word) {
-            if (word === "BRIANK") return true; // Special bypass
+            if (word === "BRIANK" || word === "BRIANKFROMTIKTOK") return true; // Bypass custom targets
             
             try {
                 const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`);
                 return response.ok;
             } catch (error) {
-                // Fallback local verify if API fails
-                return targetWords.includes(word);
+                // Local fallbacks if API goes sideways
+                if (isSixLetterMode) {
+                    return targetWords6.includes(word);
+                } else {
+                    return targetWords16.includes(word);
+                }
             }
         }
 
@@ -479,7 +625,7 @@
 
             let targetLetters = targetWord.split('');
 
-            // First pass: mark correct green
+            // Pass 1: True Matches (Green)
             for (let i = 0; i < wordLength; i++) {
                 const tile = document.getElementById(`tile-${rowIdx}-${i}`);
                 const letter = guess[i];
@@ -491,7 +637,7 @@
                 }
             }
 
-            // Second pass: mark yellow or gray
+            // Pass 2: Partial/Absent Moves
             for (let i = 0; i < wordLength; i++) {
                 const tile = document.getElementById(`tile-${rowIdx}-${i}`);
                 if (tile.classList.contains('correct')) continue;
@@ -510,8 +656,8 @@
             }
 
             if (guess === targetWord) {
-                if (targetWord === "BRIANK") {
-                    showMessage("👑 UNBELIEVABLE! You found BRIANK!", null);
+                if (targetWord === "BRIANK" || targetWord === "BRIANKFROMTIKTOK") {
+                    showMessage(`👑 UNBELIEVABLE! You found ${targetWord}!`, null);
                 } else {
                     showMessage("🎉 Brilliant! You got it.", null);
                 }
@@ -534,6 +680,13 @@
             });
         }
 
+        function resetKeyboardColors() {
+            document.querySelectorAll('.key').forEach(key => {
+                key.classList.remove('correct', 'present', 'absent');
+            });
+        }
+
+        // Global Event Listeners
         window.addEventListener('keydown', (e) => {
             handleKeyPress(e.key.toLowerCase());
         });
@@ -545,6 +698,17 @@
             });
         });
 
+        // Mode Switching Button Setup with Focus Prevention Rule
+        const modeToggleBtn = document.getElementById('modeToggle');
+        modeToggleBtn.addEventListener('click', (e) => {
+            isSixLetterMode = !isSixLetterMode;
+            initGame();
+            
+            // Instantly un-focus the tab button so 'Enter' key activates the game row, not the button again
+            modeToggleBtn.blur();
+        });
+
+        // Bootstrap on Load
         initGame();
     </script>
 </body>
