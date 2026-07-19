@@ -218,7 +218,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            margin-top: 5px;
+            margin-top: 15px; /* Added separation spacing below grid */
         }
 
         .row {
@@ -270,7 +270,7 @@
             width: 100%;
             max-width: 1200px;
             text-align: center;
-            font-size: 1.35rem; /* Super big and highly visible */
+            font-size: 1.6rem; /* Enlarged credit footer visibility */
             color: #ffffff;
             font-weight: bold;
             letter-spacing: 0.5px;
@@ -326,7 +326,7 @@
                 font-size: 0.8rem;
             }
             footer {
-                font-size: 1.1rem;
+                font-size: 1.25rem;
                 margin-top: 25px;
             }
         }
@@ -436,7 +436,7 @@
         let isSixLetterMode = true; 
         let targetWord = "";
         let wordLength = 6;
-        let maxGuesses = 6; // Dynamic setting based on mode
+        let maxGuesses = 6; 
         let currentGuess = "";
         let guesses = [];
         let gameOver = false;
@@ -448,7 +448,7 @@
             { text: `"Legend has it, some grids were made just for him."`, author: "- Internet Lore" }
         ];
 
-        // Fixed proper capitalization on your custom quote request
+        // Fully updated with proper capitalization
         const specialQuote = { text: `"Will you need your spreadsheet lol?"`, author: "- The Chat" };
 
         function initGame() {
@@ -463,7 +463,7 @@
 
             if (isSixLetterMode) {
                 wordLength = 6;
-                maxGuesses = 6; // 6 guesses for standard layout
+                maxGuesses = 6; 
                 document.getElementById('chanceText').textContent = "25% Chance of being BRIANK!";
                 document.getElementById('modeToggle').textContent = "Play 16-Letter Version";
                 
@@ -474,7 +474,7 @@
                 }
             } else {
                 wordLength = 16;
-                maxGuesses = 3; // Enforce exactly 3 guesses rule on 16 letters
+                maxGuesses = 3; // Enforced 3-guess maximum limit
                 document.getElementById('chanceText').textContent = "90% Chance of being BRIANKFROMTIKTOK!";
                 document.getElementById('modeToggle').textContent = "Play 6-Letter Version";
                 
@@ -687,7 +687,7 @@
         modeToggleBtn.addEventListener('click', (e) => {
             isSixLetterMode = !isSixLetterMode;
             initGame();
-            modeToggleBtn.blur(); // Focus loss protection complete
+            modeToggleBtn.blur(); 
         });
 
         initGame();
