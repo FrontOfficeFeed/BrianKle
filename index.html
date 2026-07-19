@@ -123,6 +123,32 @@
             text-align: right;
         }
 
+        /* Distinct, high-visibility white styling under 16-letter grid */
+        .special-undergrid-quote {
+            display: none;
+            width: 100%;
+            text-align: center;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #ffffff;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: -5px;
+            padding: 10px;
+            background-color: #252526;
+            border-radius: 6px;
+            border: 1px dashed var(--panel-border);
+            box-sizing: border-box;
+        }
+
+        .special-undergrid-quote span {
+            display: inline-block;
+            font-style: normal;
+            font-size: 0.9rem;
+            color: #a0a0a2;
+            margin-left: 8px;
+        }
+
         .social-link {
             display: flex;
             align-items: center;
@@ -218,7 +244,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            margin-top: 15px; /* Added separation spacing below grid */
+            margin-top: 15px;
         }
 
         .row {
@@ -270,7 +296,7 @@
             width: 100%;
             max-width: 1200px;
             text-align: center;
-            font-size: 1.6rem; /* Enlarged credit footer visibility */
+            font-size: 1.6rem;
             color: #ffffff;
             font-weight: bold;
             letter-spacing: 0.5px;
@@ -350,6 +376,10 @@
 
         <main class="game-area">
             <div id="board"></div>
+            
+            <div id="undergridQuote" class="special-undergrid-quote">
+                "Will you need your spreadsheet lol?" <span>- The Chat</span>
+            </div>
 
             <div id="keyboard">
                 <div class="row">
@@ -448,9 +478,6 @@
             { text: `"Legend has it, some grids were made just for him."`, author: "- Internet Lore" }
         ];
 
-        // Fully updated with proper capitalization
-        const specialQuote = { text: `"Will you need your spreadsheet lol?"`, author: "- The Chat" };
-
         function initGame() {
             currentGuess = "";
             guesses = [];
@@ -467,6 +494,9 @@
                 document.getElementById('chanceText').textContent = "25% Chance of being BRIANK!";
                 document.getElementById('modeToggle').textContent = "Play 16-Letter Version";
                 
+                // Hide special quote on 6-letter mode
+                document.getElementById('undergridQuote').style.display = "none";
+
                 if (roll < 0.25) {
                     targetWord = "BRIANK";
                 } else {
@@ -474,10 +504,13 @@
                 }
             } else {
                 wordLength = 16;
-                maxGuesses = 3; // Enforced 3-guess maximum limit
+                maxGuesses = 3; 
                 document.getElementById('chanceText').textContent = "90% Chance of being BRIANKFROMTIKTOK!";
                 document.getElementById('modeToggle').textContent = "Play 6-Letter Version";
                 
+                // Show bold white quote right underneath the 16-letter grid box area
+                document.getElementById('undergridQuote').style.display = "block";
+
                 if (roll < 0.90) {
                     targetWord = "BRIANKFROMTIKTOK";
                 } else {
@@ -513,12 +546,7 @@
             const container = document.getElementById('quotesContainer');
             container.innerHTML = "";
             
-            let activeQuotes = [...baseQuotes];
-            if (!isSixLetterMode) {
-                activeQuotes.push(specialQuote);
-            }
-
-            activeQuotes.forEach(q => {
+            baseQuotes.forEach(q => {
                 const box = document.createElement('div');
                 box.className = 'quote-box';
                 box.innerHTML = `${q.text} <span class="quote-author">${q.author}</span>`;
