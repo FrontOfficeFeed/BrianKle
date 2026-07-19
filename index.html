@@ -171,9 +171,53 @@
             width: 100%;
             justify-content: center;
             box-sizing: border-box;
+            grid-template-columns: repeat(5, 60px); /* Added standard Wordle columns */
+            grid-template-rows: repeat(6, 60px);
         }
 
+        /* FIXED & CLOSED THIS SECTION */
         .tile {
             border: 3px solid var(--tile-border);
+            background-color: var(--tile-bg);
             display: inline-flex;
             justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-sizing: border-box;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>BrianKle</h1>
+        <p class="sub-header">A custom <span>Wordle</span> clone</p>
+    </header>
+
+    <div class="layout">
+        <aside class="side-panel">
+            <h2>Stats & Info</h2>
+            <div class="quote-box">
+                "The code is mightier than the sword."
+                <span class="quote-author">- Anonymous</span>
+            </div>
+            <button class="action-btn">New Game</button>
+        </aside>
+
+        <main class="game-area mode-6">
+            <div id="board">
+                <div class="tile">B</div>
+                <div class="tile">R</div>
+                <div class="tile">I</div>
+                <div class="tile">A</div>
+                <div class="tile">N</div>
+                
+                </div>
+        </main>
+    </div>
+
+</body>
+</html>
